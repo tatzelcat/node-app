@@ -3,6 +3,7 @@ orbs:
   node: circleci/node@5.0.1
   docker: circleci/docker@2.1.4
   heroku: circleci/heroku@2.0.0
+
 jobs:
   build:
     docker:
@@ -11,9 +12,7 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: npm
-      - run: |
-          echo "Installing dependencies..."
-          npm install
+
   test:
     docker:
       - image: cimg/node:16.10
@@ -31,13 +30,13 @@ jobs:
       - setup_remote_docker
       - checkout
       - docker/check:
-          docker-username: DOCKERHUB_LOGIN
-          docker-password: DOCKERHUB_PASSWORD
+          registry: docker.io
       - docker/build:
           image: tatzelcat/nodeapp_repo
+          tag: latest
       - docker/push:
           image: tatzelcat/nodeapp_repo
-
+          tag: latest
 
 workflows:
   build-and-push:
