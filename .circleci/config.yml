@@ -28,9 +28,12 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
+      - run:
+        name: Debug Docker Login
+        command: |
+          echo "Username is set: ${DOCKER_USERNAME:+yes}"
+          echo "Registry is set: ${PARAM_REGISTRY:+yes}"
       - docker/check
-          docker-username: DOCKER_LOGIN
-          docker-password: DOCKER_PASSWORD
       - docker/build:
           image: tatzelcat/nodeapp_repo
           tag: latest
