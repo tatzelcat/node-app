@@ -29,6 +29,8 @@ jobs:
       - setup_remote_docker
       - checkout
       - docker/check
+          docker-username: DOCKER_LOGIN
+          docker-password: DOCKER_PASSWORD
       - docker/build:
           image: tatzelcat/nodeapp_repo
           tag: latest
