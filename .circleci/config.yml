@@ -46,4 +46,4 @@ workflows:
       - publish:
           requires:
             - test
-    context: docker-creds
+
