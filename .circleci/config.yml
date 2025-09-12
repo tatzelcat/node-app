@@ -24,20 +24,17 @@ jobs:
           npm run test
   
   publish:
-    executor: docker/docker
-    steps:
-      - setup_remote_docker
-      - checkout
-      - run:  |
-          echo "Username is set: ${DOCKER_USERNAME:+yes}"
-          echo "Registry is set: ${PARAM_REGISTRY:+yes}"
-      - docker/check
-      - docker/build:
-          image: tatzelcat/nodeapp_repo
-          tag: latest
-      - docker/push:
-          image: tatzelcat/nodeapp_repo
-          tag: latest
+     executor: docker/docker
+     steps:
+       - setup_remote_docker
+       - checkout
+       - docker/check:
+              docker-username: DOCKERHUB_LOGIN  
+              docker-password: DOCKERHUB_PASSWORD 
+       - docker/build:
+           image: mrcicil/test-repo
+       - docker/push:
+           image: mrcicil/test-repo
 
 workflows:
   build-and-push:
