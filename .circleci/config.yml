@@ -28,14 +28,22 @@ jobs:
      steps:
        - setup_remote_docker
        - checkout
+       - when:
+          condition:
+            equal: [ release, <<pipeline.git.branch>>]
+          steps:
+           - run: echo "I am on release branch"
        - docker/check
        - docker/build:
            image: tatzelcat/nodeapp_repo
        - docker/push:
            image: tatzelcat/nodeapp_repo
 
+
+
+
 workflows:
-  build-and-push:
+  on-release:
     jobs:
       - build
       - test:
@@ -44,4 +52,5 @@ workflows:
       - publish:
           requires:
             - test
+   
 
